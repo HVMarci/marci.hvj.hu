@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <title>Javascript</title>
+    <style type="text/css">
+        canvas { border: 1px solid black; }
+    </style>
+</head>
+<body>
+    <canvas width="500px" height="500px" id="canvas"></canvas>
+    <br>
+    <div id="sutiSzam">0 sütid van.</div>
+    <button id="pluszSebesseg" onclick="pluszSebesseg(this)">Sebesség növelése: 10 süti</button>
+    <button id="noveles" onclick="noveles(this)">Méret növelése: 10 süti</button>
+
+    <script>
+
+        var bal = false;
+        var jobb = false;
+        var fel = false;
+        var le = false;
+        var x = 20;
+        var y = 20;
+        var canvas = document.getElementById("canvas");
+        var context = canvas.getContext("2d"); 
+        var sebesseg = 3;
+        var coords = [[]];
+        coords[0] = [-10,-10];
+        coords[1] = [10,-10];
+        coords[2] = [10,10];
+        coords[3] = [-10,10];
+        var sutiCoords = [[]];
+        sutiCoords[0] = [-10,-10];
+        sutiCoords[1] = [10,-10];
+        sutiCoords[2] = [10,10];
+        sutiCoords[3] = [-10,10];
+        var kimenet = [[]];
+        kimenet[0] = [-10,-10];
+        kimenet[1] = [10,-10];
+        kimenet[2] = [10,10];
+        kimenet[3] = [-10,10];
+        var szog = 0;
+        const w = canvas.width;
+        const h = canvas.height;
+        const kp_x = w/2;
+        const kp_y = h/2;
+        var pontX = [];
+        var pontY = [];
+        var leptekX = [];
+        var leptekY = [];
+        var pontR = [];
+        var sutiX;
+        var sutiY;
+        var sutiSzam = 0;
+        var sebessegAr = 10;
+        var novelesAr = 10;
+        var meret = 20;
+        var maxCsillagR = 0.5;
+        var csillagokSzama = 200;
+
+        window.onload = init();
+
+        function init() {
+            window.addEventListener("keydown", leutes_kezelese, true);
+            window.addEventListener("keyup", felemeles_kezelese, true);
+            window.addEventListener("beforeasdunload", saveAllas(sutiSzam), true);
+            context.fillStyle = "white";
+            hatterBeallitas();
+            ujSuti();
+            update();
+            setInterval(update, 20);
+        }
+
+
+        function leutes_kezelese(e) {
+            var bill = e.key;
+            switch (bill) {
+                case "Right":
+                case "ArrowRight":
+                    jobb = true;
+                    break;
+
+                case "Up":
+                case "ArrowUp":
+                    fel = true;
+                    break;
+                case "Left":
+                case "ArrowLeft":
+                    bal = true;
+                    break;
+
+                case "Down": // IE/Edge specific value
+                case "ArrowDown":
+                    le = true;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        function felemeles_kezelese(e) {
+            switch (e.key) {
+                case "Right":
+                case "ArrowRight":
+                    jobb = false;
+                    break;
+
+                case "Up":
+                case "ArrowUp":
+                    fel = false;
+                    break;
+                case "Left":
+                case "ArrowLeft":
+                    bal = false;
+                    break;
+
+                case "Down": // IE/Edge specific value
+                case "ArrowDown":
+                    le = false;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        function feldolgozas() {
+            if (fel && !le && !jobb && !bal) {
+                y -= sebesseg;
+            } else if (!fel && le && !jobb && !bal) {
+                y += sebesseg;
+            } else if (!fel && !le && jobb && !bal) {
+                x += sebesseg;
+            } else if (!fel && !le && !jobb && bal) {
+                x -= sebesseg;
+            } else if (fel && !le && jobb && !bal) {
+                y -= sebesseg;
+                x += sebesseg;
+            } else if (fel && !le && !jobb && bal) {
+                y -= sebesseg;
+                x -= sebesseg;
+            } else if (!fel && le && jobb && !bal) {
+                y += sebesseg;
+                x += sebesseg;
+            } else if (!fel && le && !jobb && bal) {
+                y += sebesseg;
+                x -= sebesseg;
+            } else if (fel && !le && jobb && bal) {
+                y -= sebesseg;
+            } else if (!fel && le && jobb && bal) {
+                y += sebesseg;
+            } else if (fel && le && jobb && !bal) {
+                x += sebesseg;
+            } else if (fel && le && !jobb && bal) {
+                x -= sebesseg;
+            } else {
+                console.log("semmi");
+            }
+            if (x <= 0) x = 0;
+            if (x >= w) x = w;
+            if (y <= 0) y = 0;
+            if (y >= h) y = h;
+        }
+
+
+        function torles() {
+            var f = context.fillStyle;
+            context.fillStyle = "black";
+            context.fillRect(0,0,w,h);
+            context.fillStyle = f;
+        }
+
+        function update() {
+            feldolgozas();
+            torles();
+            hatterRajzolasa();
+            sutiRajzolas();
+            forgatas(szog*Math.PI/180);
+            if (szog++ >= 360) {
+                szog -= 360;
+            }
+            negyzetRajzolasa();
+            if(sutiTouch()) {
+                ujSuti();
+                sutiSzam++;
+                sutiSzamKirajzol();
+            }
+        }
+
+        function negyzetRajzolasa() {
+            context.beginPath();
+            context.moveTo(x+kimenet[0][0], y+kimenet[0][1]);
+            context.lineTo(x+kimenet[1][0], y+kimenet[1][1]);
+            context.lineTo(x+kimenet[2][0], y+kimenet[2][1]);
+            context.lineTo(x+kimenet[3][0], y+kimenet[3][1]);
+            context.lineTo(x+kimenet[0][0], y+kimenet[0][1]);
+            context.fill();
+        }
+
+        function forgatas(szog) {
+            for (i = 0; i < coords.length; i++) {
+                kimenet[i][0] = coords[i][0] * Math.cos(szog) - coords[i][1] * Math.sin(szog);
+                kimenet[i][1] = coords[i][0] * Math.sin(szog) + coords[i][1] * Math.cos(szog);
+            }
+        }
+
+        function hatterBeallitas() {
+            for (i = 0; i < csillagokSzama; i++) {
+                pontX[i] = Math.random()*w;
+                pontY[i] = Math.random()*h;
+                leptekX[i] = (pontX[i]-kp_x) / kp_x * 2;
+                leptekY[i] = (pontY[i]-kp_y) / kp_y * 2;
+                pontR[i] = distance(pontX[i], pontY[i], kp_x, kp_y)/kp_x*maxCsillagR;
+            }
+        }
+
+        function hatterRajzolasa() {
+            var f = context.fillStyle;
+            context.fillStyle = "yellow";
+            for (i = 0; i < pontX.length; i++) {
+                context.beginPath();
+                context.arc(pontX[i], pontY[i], pontR[i], 0, 2*Math.PI);
+                context.fill();
+                pontX[i]+=leptekX[i];
+                pontY[i]+=leptekY[i];
+                leptekX[i] = (pontX[i]-kp_x)/kp_x*2;
+                leptekY[i] = (pontY[i]-kp_y)/kp_y*2;
+                pontR[i] = distance(pontX[i], pontY[i], kp_x, kp_y)/kp_x*maxCsillagR;
+                if (pontX[i] > w+pontR[i] || pontY[i] > h+pontR[i] || pontX[i] < 0-pontR[i] || pontY[i] < 0-pontR[i]) {
+                    pontX[i] = Math.random()*100+kp_x-50;
+                    pontY[i] = Math.random()*100+kp_y-50;
+                    leptekX[i] = (pontX[i]-kp_x)/kp_x*2;
+                    leptekY[i] = (pontY[i]-kp_y)/kp_y*2;
+                    pontR[i] = distance(pontX[i], pontY[i], kp_x, kp_y)/kp_x*maxCsillagR;
+                }
+            }
+            context.fillStyle = f;
+        }
+
+        function distance(x1,y1,x2,y2) {
+            dx = x1-x2;
+            dy = y1-y2;
+            d = Math.sqrt(dx*dx+dy*dy);
+            return d;
+        }
+
+        function sutiRajzolas() {
+            var f = context.fillStyle;
+            context.fillStyle = "brown";
+
+            context.beginPath();
+            context.moveTo(sutiX+sutiCoords[0][0], sutiY+sutiCoords[0][1]);
+            context.lineTo(sutiX+sutiCoords[1][0], sutiY+sutiCoords[1][1]);
+            context.lineTo(sutiX+sutiCoords[2][0], sutiY+sutiCoords[2][1]);
+            context.lineTo(sutiX+sutiCoords[3][0], sutiY+sutiCoords[3][1]);
+            context.lineTo(sutiX+sutiCoords[0][0], sutiY+sutiCoords[0][1]);
+            context.fill();
+
+            context.fillStyle = f;
+        }
+
+        function ujSuti() {
+            sutiX=Math.random()*(w-20)+10;
+            sutiY=Math.random()*(h-20)+10;
+        }
+
+        function sutiTouch() {
+            if (((x<sutiX && x+meret >= sutiX) || (x>sutiX && x-meret <= sutiX)) && ((y<sutiY && y+meret >= sutiY) || (y>sutiY && y-meret <= sutiY))) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        function sutiSzamKirajzol() {
+            document.title = sutiSzam + " sütid van";
+            document.getElementById("sutiSzam").innerText = sutiSzam + " sütid van.";
+        }
+
+        function pluszSebesseg(e) {
+            if (sutiSzam >= sebessegAr) {
+                sebesseg++;
+                sutiSzam -= sebessegAr;
+                sebessegAr += 10;
+                e.innerText = "Sebesség növelése: "+sebessegAr+" süti";
+                sutiSzamKirajzol();
+                return true;
+            } else {
+                console.log("Nincs elég sütid!");
+                return false;
+            }
+        }
+
+        function noveles(e) {
+            if (sutiSzam >= novelesAr) {
+                for (i = 0; i < coords.length; i++) {
+                    if (coords[i][0] < 0) {
+                        coords[i][0] -= 1;
+                    } else {
+                        coords[i][0] += 1;
+                    }
+                    if (coords[i][1] < 0) {
+                        coords[i][1] -= 1;
+                    } else {
+                        coords[i][1] += 1;
+                    }
+                }
+                meret += 1;
+                sutiSzam -= novelesAr;
+                novelesAr += 10;
+                e.innerText = "Méret növelése: "+novelesAr+" süti";
+                sutiSzamKirajzol();
+                return true;
+            } else {
+                console.log("Nincs elég sütid!");
+                return false;
+            }
+        }
+
+        function saveAllas(s) {
+            var d = new Date();
+            var exdays = 365;
+            d.setTime(d.getTime() + (exdays*24*60*60*1000));
+            var expires = "expires="+ d.toUTCString();
+            var cookie = "sutiszam="+getSzam()+";"+expires+";path=/";
+            //alert(cookie);
+            document.cookie = cookie;
+        }
+
+        function getSzam() {
+            return sutiSzam;
+        }
+    </script>
+</body>
+</html>

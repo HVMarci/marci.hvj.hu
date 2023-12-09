@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="file" id="file" onchange="change(this)">
+    <script>
+        function change(e) {
+
+            var file = e.files[0];
+
+            var reader = new FileReader();
+            reader.onload = function (progressEvent) {
+                alert(this.result);
+            };
+            reader.readAsText(file);
+        };
+    </script>
+</body>
+
+</html>

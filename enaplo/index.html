@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>E-Napló</title>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href="konyv.png">
+    <script type="text/javascript" src="app.js"></script>
+    <script src="bejelentkezes.js"></script>
+</head>
+<body>
+    <form id="beirasForm" onsubmit="jegyBekuldese();">
+        <label for="nev">Név: </label>
+        <input type="text" name="nev">
+        <br>
+        <label for="jegy">Jegy: </label>
+        <input type="number" min="1" max="5" name="jegy">
+        <br>
+        <button type="submit">Jegy beírása</button>
+    </form>
+    <a href="ujOsztaly">Osztály készítése</a>
+    <br>
+    <button type="button" onclick="jegyekKiirasaDivbe();">Jegyek kijelzése</button>
+    <div id="jegyekKiirasiHelye"></div>
+</body>
+</html>

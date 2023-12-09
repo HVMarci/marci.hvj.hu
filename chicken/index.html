@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Website</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>My Website</h1>
+        <nav>
+            <a href="#home">Homepage</a>
+            <a href="#contact">Contact</a>
+            <a href="#gallery">Chicken's Gallery</a>
+        </nav>
+    </header>
+
+    <section id="home">
+        <p>This is a website featuring lots of chickens! Click on the gallery to watch chicken images.</p>
+        <button onclick="displayJoke()">Random chicken joke</button>
+    
+        <p id="joke"></p>
+            <button onclick="displayExplanation()">Show Explanation</button>
+        <p id="explanation"></p>
+    </section>
+
+    <section id="contact">
+        <h2>Contact</h2>
+        <p>Email: john.doe@gmail.com</p>
+        <p>Phone: +1 83 527235</p>
+    </section>
+
+    <section id="gallery">
+        <h2>Chicken Gallery</h2>
+        <div class="image-container">
+            <img src="path_to_chicken_image1.jpg" alt="Chicken Image 1">
+            <img src="path_to_chicken_image2.jpg" alt="Chicken Image 2">
+            <img src="path_to_chicken_image3.jpg" alt="Chicken Image 3">
+            <!-- Add more images as needed -->
+        </div>
+    </section>
+
+    <!-- Image Modal -->
+    <div id="imageModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modalImage">
+        <div id="caption"></div>
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+</html>

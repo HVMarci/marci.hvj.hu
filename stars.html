@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stars</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="1920" height="1080"></canvas>
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        const stars = [];
+
+        class Star {
+            constructor(distX, distY, dir) {
+                this.distX = distX; // Distance from camera (if they were on a line)
+                this.dir = dir; // Direction from camera
+                this.distY = distY; // Distance from camera (const)
+            }
+
+            draw() {
+                const b = (this.distY / this.distX) * canvas.height / 2;
+                const x = b * Math.cos(this.dir);
+                const y = b * Math.sin(this.dir);
+                ctx.fillRect(x, y, 1, 1);
+            }
+        }
+
+        for (let i = 0; i < 4000; i++) {
+            stars.push(new Star(Math.random() * 1000, Math.floor(Math.random() * 4 + 1) * 250 - 140, Math.random() * 2 * Math.PI));
+        }
+
+        // adjust speed on scrolling
+        var speed = 1;
+        window.addEventListener('wheel', e => {
+            speed -= e.deltaY / 1000;
+            if (speed < 0.2) speed = 0.2;
+        });
+
+        var midx = canvas.width / 2;
+        var midy = canvas.height / 2;
+
+        // midx and midy at mouse position if mouse is held down
+        var mouseDown = false;
+        var mouseDownX = 0;
+        var mouseDownY = 0;
+        window.addEventListener('mousedown', e => {
+            mouseDown = true;
+            mouseDownX = e.clientX;
+            mouseDownY = e.clientY;
+        });
+        window.addEventListener('mouseup', e => {
+            mouseDown = false;
+        });
+        window.addEventListener('mousemove', e => {
+            if (mouseDown) {
+                midx += -mouseDownX + e.clientX;
+                midy += -mouseDownY + e.clientY;
+                mouseDownX = e.clientX;
+                mouseDownY = e.clientY;
+            }
+        });
+
+        function draw() {
+            if (canvas.width != window.innerWidth || canvas.height != window.innerHeight) {
+                
+                // adjust midx and midy with the change in size
+                midx = midx / canvas.width * window.innerWidth;
+                midy = midy / canvas.height * window.innerHeight;
+                
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            ctx.fillStyle = 'black';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = 'white';
+            // camera is in the middle
+            ctx.translate(midx, midy);
+            stars.forEach(star => star.draw());
+            ctx.translate(-midx, -midy);
+
+            // Move stars
+            stars.forEach(star => {
+                star.distX -= speed;
+                if (star.distX < 0) {
+                    // b = (distY / distX) * (canvas.height / 2)
+                    // distX = (canvas.height / 2) * distY / b
+                    star.distX = 1000;
+                    star.dir = Math.random() * 2 * Math.PI;
+                }
+            });
+
+            requestAnimationFrame(draw);
+        }
+
+        draw();
+    </script>
+</body>
+</html>

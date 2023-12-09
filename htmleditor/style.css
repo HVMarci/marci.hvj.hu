@@ -1,0 +1,27 @@
+/*#mainframe {
+    border: 1px solid black;
+    resize: none;
+    position: absolute;
+    left: 2%;
+    right: 48%;
+    width: 46%;
+    height: 600px;
+}*/
+
+#container {
+    border: 1px solid black;
+    position: absolute;
+    left: 2%;
+    right: 98%;
+    width: 96%;
+    height: 600px;
+    font-family: 'Consolas', 'monospace';
+}
+
+.tag {
+    color: brown;
+}
+
+.kcs {
+    color: blue;
+}

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+	"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd"><svg
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   version="1.0"
+   width="147.621"
+   height="149.99966"
+   id="svg2721">
+  <defs
+     id="defs2723" />
+  <g
+     transform="translate(-470.95293,-58.433951)"
+     id="layer1">
+    <path
+       d="M 501.90693,58.433951 C 501.90693,58.433951 470.95293,91.767551 470.95293,144.14812 C 470.95293,177.48142 492.38193,208.43362 492.38193,208.43362 L 530.47893,208.43362 L 618.57393,208.43362 L 618.57393,177.48142 L 618.57393,58.433951 L 587.61993,58.433951 L 587.61993,177.48142 L 511.87593,177.48142 C 507.60393,167.51002 504.28593,156.01012 504.28593,144.14812 C 504.28593,116.80165 514.02993,94.718651 523.33293,79.787951 L 523.33293,94.148051 L 559.04793,94.148051 L 559.04793,58.433951 L 540.00093,58.433951 L 523.33293,58.433951 L 501.90693,58.433951 z"
+       id="rect3713"
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:6;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:3.59999982;stroke-opacity:1" />
+  </g>
+</svg>

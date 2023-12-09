@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D dots</title>
+</head>
+<body>
+    <canvas id="canvas" style="border: 1px solid black"></canvas>
+    <script>
+        const w = 400, h = 400;
+        const rw = w*2, rh = h*2;
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = rw;
+        canvas.height = rh;
+
+        function drawPoint(x, y) {
+            ctx.fillStyle = 'black';
+            ctx.fillRect(x*2, y*2, 2, 2);
+        }
+
+        function clear() {
+            ctx.clearRect(0, 0, rw, rh);
+        }
+
+        //var dot = {x: 0, y: 100, phx: 0, xs: 50, xm: 150, xe: 250};
+        var dots = [];
+        // Spirál
+        /*for (let i = 0; i < 720; i++) {
+            dots.push({x: 0, y: i/3+20, phx: i, xs: 20, xe: w-20, xm: 0});
+            dots[i].xm = (dots[i].xe-dots[i].xs)/2+dots[i].xs;
+        }*/
+
+        // Négyzet
+        /*for (let i = 0; i <= 100; i++) {
+            dots.push({x: 0, y: i*2 + 100, phx: 90, xs: 50, xe: 250});
+            dots.push({x: 0, y: i*2 + 100, phx: 270, xs: 50, xe: 250});
+            let a = 90;
+            if (i%2 == 1) a = 270;
+            dots.push({x: 0, y: 100, phx: a, xs: i+51, xe: 250-i});
+            dots.push({x: 0, y: 300, phx: a, xs: i+51, xe: 250-i});
+        }*/
+
+        // Random spirál
+        dots.push({x: 0, y: 100, phx: 90, xs: 50, xe: 250, phy: 90, ys: 100, ye: 300});
+        for (let i = 1; i < 100; i++) {
+            dots.push({x: 0, y: i*2+100, phx: dots[i-1].phx + (Math.random()-0.3)*60, xs: 50, xe: 250, phy: dots[i-1].phy+1, ys: 100, ye: 300});
+        }
+        
+        function draw() {
+            clear();
+            for (let i = 0; i < dots.length; i++) {
+                dots[i].x = Math.sin(dots[i].phx/180*Math.PI) * (dots[i].xe - dots[i].xs)/2 + (dots[i].xe-dots[i].xs)/2 + dots[i].xs;
+                dots[i].y = Math.sin(dots[i].phy/180*Math.PI) * (dots[i].ye - dots[i].ys)/2 + (dots[i].ye-dots[i].ys)/2 + dots[i].ys;
+                drawPoint(dots[i].x, dots[i].y);
+                dots[i].phx++;
+                dots[i].phx %= 360;
+                dots[i].phy += 2;
+                dots[i].phy %= 360;
+            }
+            requestAnimationFrame(draw);
+        }
+
+
+        requestAnimationFrame(draw);
+    </script>
+</body>
+</html>

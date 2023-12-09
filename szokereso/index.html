@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <title>Szókereső készítése</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.8.3.js"></script>
+</head>
+<body>
+    <span>v1.0</span>
+    <br>
+    <br>
+    <div id="lekeres">
+        <label for="soroszlop">Sorok/oszlopok száma: </label>
+        <input type="number" id="soroszlop" name="soroszlop">
+        <br>
+        <input type="checkbox" id="magyarbetuk" name="magyarbetuk" value="magyarbetuk" checked>
+        <label for="magyarbetuk">Legyen 'Q', 'W', 'X' a kitöltésben? </label>
+        <br>
+        <br>
+        <button type="button" id="start" onclick="bekuldes()">Táblázat készítése</button>
+    </div>
+    <br>
+    <br>
+    <div id="tablazat"></div>
+    <br>
+    <div id="kitoltogomb"></div>
+    <script type="text/javascript" src="app.js"></script>
+</body>
+</html>

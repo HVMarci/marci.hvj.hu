@@ -1,0 +1,8 @@
+﻿<form>
+    <fieldset>
+        <label for="nev">Csapatnév: </label>
+        <input type="text" name="nev" id="nev">
+        <label for="password">Jelszó: </label>
+        <input type="password" name="password" id="password">
+    </fieldset>
+</form>

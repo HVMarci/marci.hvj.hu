@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <title>Átlagkerekítő program</title>
+    <style>
+        .button {
+            margin: 10px;
+        }
+
+        .container {
+            padding: 10px 2px;
+        }
+
+        .asztali {
+            font-style: italic;
+            color: blue;
+            text-decoration: underline;
+        }
+
+        .asztali:hover {
+            color: darkred;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <button class="button" onclick="szamitas(parseFloat(prompt('Milyen átlagot szeretnél elérni?').replaceAll(',', '.')))">Ötösszámítás átlagválasztással</button>
+    <br>
+    <button class="button" onclick="szamitas(4.51)">Ötösszámítás ötösre (4,51)</button>
+    <br>
+    <div id="eredmenyContainer" class="container"></div>
+    <a href="asztali" class="asztali">Asztali változat letöltése</a>
+
+    <script>
+        function szamitas(elerniAtlag) {
+            if (elerniAtlag >= 5) {
+                alert("Nem szerezhetsz kereken 5-öt, vagy nagyobb átlagot!");
+                console.error("Az átlag nagyobb, mint 5: " + elerniAtlag);
+                return;
+            }
+
+            let atlag = parseFloat(prompt("Mennyi az átlagod?").replaceAll(',', '.'));
+            let jegyekSzama = parseInt(prompt("Hány jegyed van?\n(Egy piros jegyet kétszer számíts!)"));
+            let otosokSzama;
+
+            for (otosokSzama = 0; atlag < elerniAtlag; otosokSzama++) {
+                let tmp = atlag * jegyekSzama;
+                tmp += 5;
+                jegyekSzama++;
+                atlag = tmp / jegyekSzama;
+            }
+
+            let eredmenyContainer = document.getElementById("eredmenyContainer");
+            eredmenyContainer.innerHTML = "Még <b>" + otosokSzama + "</b> darab ötöst kell szerezned ahhoz, hogy elérd a következő átlagot: <b>" + elerniAtlag + "</b> <i>(" + atlag + ")</i>";
+        }
+    </script>
+</body>
+</html>

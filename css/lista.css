@@ -1,0 +1,39 @@
+table.lista {
+    border: 1px solid black;
+}
+
+table.lista td {
+    /* background-color: #4CAF50; */
+    background-color: #DBF0DB;
+    border: 3px solid green;
+    border-radius: 3px;
+    padding: 3px 10px;
+}
+
+table.lista a {
+    cursor: pointer;
+}
+
+table.lista a:link {
+    color: blue;
+	background-color: transparent;
+	text-decoration: none;
+}
+
+table.lista a:visited {
+    color: blue;
+	background-color: transparent;
+	text-decoration: underline;
+}
+
+table.lista a:hover {
+    color: red;
+    background-color: transparent;
+    text-decoration: underline;
+}
+
+table.lista a:active {
+    color: transparent;
+    background-color: transparent;
+    text-decoration: none;
+}

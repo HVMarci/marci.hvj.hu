@@ -1,0 +1,31 @@
+﻿<form onsubmit="kviz_submit()" method="POST" id="kvizForm">
+    <fieldset>
+        <legend>1. kérdés</legend>
+        <input class="radio" type="radio" name="1" id="1a" value="1" />
+        <label for="1a">1. válasz</label>
+        <br />
+        <input class="radio" type="radio" name="1" id="1b" value="2" />
+        <label for="1b">2. válasz</label>
+        <br />
+        <input class="radio" type="radio" name="1" id="1c" value="3" />
+        <label for="1c">3. válasz</label>
+        <br />
+    </fieldset>
+    <fieldset>
+        <legend>2. kérdés</legend>
+        <input class="radio" type="radio" name="2" id="2a" value="1" />
+            <label for="2a">1. válasz</label>
+            <br />
+            <input class="radio" type="radio" name="2" id="2b" value="2" />
+            <label for="2b">2. válasz</label>
+            <br />
+            <input class="radio" type="radio" name="2" id="2c" value="3" />
+            <label for="2c">3. válasz</label>
+            <br />
+    </fieldset>
+    <input type="reset" id="reset" value="A kvíz ürítése" />
+    <br />
+    <br />
+    <input type="submit" id="kuldes" value="Küldés" />
+</form>
+<p id="visszateres"></p>

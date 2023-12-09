@@ -1,0 +1,9 @@
+﻿v1.0 - Kész a program
+
+v1.1 - A lista most már csak az az heti időket írja ki
+     - Látszik összeadva az az heti idő
+
+v1.2 - Két inputmező hozzáadva (plusz, mínusz) a régebbi legördülő lista helyett
+     - A kiválaszott fejek körüli kék border 1px-ről 0.3em-re lett változtatva
+
+v1.2.1 - A max 120 perc hozzáadás/levonás 240-re lett állítva

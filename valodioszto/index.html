@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+	button {font-size: 30px; border: 1px solid red; border-radius: 5px; background-color: DodgerBlue; color: red; transition: background-color 1s;}
+	button:hover {background-color: yellow;}
+	body {background-image: url("szamologep.png");}
+	p {color:green;}
+	#kiiro {display: flex;}
+</style>
+<title>Számoló</title>
+<script>
+var par;
+var i;
+var osszeg;
+function szamolo(szam2) {
+	if (isNaN(Number(szam2))) {
+		alert("Ez nem egy szám!");
+		return(false);
+	}
+	else {
+		var keszszam = Math.abs(Number(szam2));
+		if (keszszam==Math.round(keszszam)) {
+			document.getElementById("kiiro").innerHTML = szam2 + " valódi osztói:&nbsp;";
+			for (i=Math.round(keszszam/2); i>1; i--) {
+				osszeg = keszszam / i;
+				if (osszeg == Math.round(osszeg)) {
+					par = document.getElementById("kiiro").innerHTML;
+					document.getElementById('kiiro').innerHTML = par + osszeg.toString() + "; ";
+				}
+			}
+		}
+		else {
+			alert("Ez egy törtszám!");
+			return(false);
+		}
+	}
+}
+function kerdes() {
+	var szam1 = prompt("Melyik egész számot akarod elosztani?\nÍrd ide!\nMegjegyzés:\nHa túl nagy számot írsz be, lehet, hogy nem fogja elbírni a weboldal!");
+	szamolo(szam1.replaceAll(" ", "").replaceAll(",","."));
+}
+</script>
+</head>
+<body>
+<button onClick="kerdes()">A szám beírásához kattints ide!</button>
+<p><b id="kiiro"></b></p>
+</body>
+</html>

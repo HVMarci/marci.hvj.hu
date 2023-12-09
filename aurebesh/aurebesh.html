@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AureBesh learning</title>
+    <style>
+    	a {
+    		color: blue;
+    	}
+    </style>
+</head>
+<body style="display: none">
+    <h1>Aurebesh betűk tanulása</h1>
+    <div id="mode0">
+	    <p>Aurebesh -> latin megfelelő</p>
+	    <p><a href="aurebesh.html?mode=1">Aurebesh -> betű neve</a></p>
+	</div>
+	<div id="mode1">
+		<p><a href="aurebesh.html?mode=0">Aurebesh -> latin megfelelő</a></p>
+		<p>Aurebesh -> betű neve</p>
+	</div>
+    <p><a href="aurebesh_latin.html">Betű neve -> latin megfelelő</a></p>
+    <div id="kepekdiv">
+    </div>
+    <div id="texareadiv" style="margin-top: 20px;">
+        <textarea id="textarea"></textarea>
+    </div>
+
+    <script>
+        const betuk = ["a", "b", "c", "ch", "d", "e", "ae", "eo", "f", "g", "h", "i", "j", "k", "kh", "l", "m", "n", "ng", "o", "oo", "p", "q", "r", "s", "sh", "t", "th", "u", "v", "w", "x", "y", "z"];
+        const betunevek = ["Aurek", "Besh", "Cresh", "Cherek", "Dorn", "Esk", "Enth", "Onith", "Forn", "Grek", "Herf", "Isk", "Jenth", "Krill", "Krenth", "Leth", "Mern", "Nern", "Nen", "Osk", "Orenth", "Peth", "Qek", "Resh", "Senth", "Sen", "Trill", "Thesh", "Usk", "Vev", "Wesk", "Xesh", "Yirt", "Zerek"];
+        const letterCount = 34;
+        const width = 256, height = 256;
+
+        const textarea = document.getElementById("textarea");
+        const kepekdiv = document.getElementById("kepekdiv");
+        const urlParams = new URLSearchParams(window.location.search);
+        var mode = urlParams.has("mode") ? parseInt(urlParams.get("mode")) : 0;
+        if (isNaN(mode)) mode = 0;
+        
+        if (mode == 0) {
+        	document.getElementById("mode0").style.display = "block";
+        	document.getElementById("mode1").style.display = "none";
+        } else {
+        	document.getElementById("mode0").style.display = "none";
+        	document.getElementById("mode1").style.display = "block";
+        }
+        document.body.style.display = "block";
+
+        var solution = 0, mistakes = 0, good = 0, steps = 0;
+
+        var randomFrom = [], marad = [];
+        for (let i = 0; i < 34; i++) {
+            randomFrom[i] = i;
+            marad[i] = 5;
+            /*switch (betuk[i]) {
+                case "a":
+                case "b":
+                case "z":
+                case "ch":
+                case "j":
+                case "y":
+                case "t":
+                case "i":
+                case "v":
+                case "oo":
+                case "sh":
+                case "x":
+                    marad[i] = 1;
+                    break;
+            }*/
+        }
+
+        // generate images
+        var kepek = [];
+        for (let i = 0; i < 34; i++) {
+            let img = document.createElement('img');
+            img.src = betunevek[i] + ".svg";
+            img.style.height = "256px";
+            img.style.display = "none";
+
+            kepekdiv.appendChild(img);
+            kepek.push(img);
+        }
+    
+        function clear() {
+            textarea.value = "";
+            textarea.style.color = "black";
+
+            kepek[solution].style.display = "none";
+        }
+        
+        function generate() {
+            clear();
+            solution = randomFrom[Math.floor(Math.random() * randomFrom.length)];
+            kepek[solution].style.display = "inline";
+            console.log(kepek[solution]);
+        }
+
+        function check(str) {
+            if (mode != 0) return str.trim().toLowerCase() == betunevek[solution].toLowerCase();
+            else return str.trim().toLowerCase() == betuk[solution].toLowerCase();
+        }
+
+        function checkBox() {
+            return check(textarea.value);
+        }
+
+        textarea.addEventListener("keypress", (e) => {
+            if (e.key == "Enter") {
+                e.preventDefault();
+                if (checkBox()) {
+                    good++;
+                    if (--marad[solution] == 0) {
+                        let i = 0;
+                        while (randomFrom[i] != solution)i++;
+                        randomFrom.splice(i, 1);
+                        if (randomFrom.length == 0) {
+                            alert(`Practice completed!\n${steps} tries\n${good} good, ${mistakes} bad`);
+                        }
+                    }
+                    generate();
+                } else {
+                    textarea.style.color = "red";
+                    marad[solution]--;
+                    mistakes++;
+                }
+                steps++;
+            }
+        });
+
+        generate();
+    </script>
+</body>
+</html>

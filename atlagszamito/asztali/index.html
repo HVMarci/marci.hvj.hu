@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Átlagszámító program</title>
+    <style>
+        table, td, tr {
+            border: 1px solid black;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+
+        td {
+            padding: 5px;
+        }
+
+        div.title {
+            margin: 3px;
+        }
+    </style>
+</head>
+
+<body>
+    <p>
+        Java fájl letöltése: <a href="atlagszamlalo.jar" download>atlagszamlalo.jar</a> (Lehetőség szerint nem kellene átnevezni, mert az
+        indítófájl nem fogja tudni elindítani.)
+    </p>
+    <p>
+        Windows 10 indító fájl letöltése: <a href="atlagszamlalo_inditas.bat" download>atlagszamlalo_inditas.bat</a> (Ezt át lehet nevezni, Windows
+        10-en dupla kattintással kell elindítani. Fontos, hogy egy mappában legyen az <i>atlagszamlalo.jar</i> fájllal.)
+    </p>
+    <div class="title">A .bat fájl tartalma:</div>
+    <div class="tableContainer">
+        <table>
+            <tbody id="tablatestbat">
+
+            </tbody>
+        </table>
+    </div>
+    <div class="title">A .jar fájl tartalma:</div>
+    <div class="tableContainer">
+        <table>
+            <tbody id="tablatestjava">
+
+            </tbody>
+        </table>
+    </div>
+    <script>
+        fetch('atlagszamlalo_inditas.bat').then(r => r.text()).then(t => {
+            let content = t.split("\n");
+
+            let tablaTest = document.getElementById('tablatestbat');
+            for (let i = 0; i < content.length; i++) {
+                let ujSor = document.createElement("tr");
+                
+                let szamozas = document.createElement("td");
+                szamozas.innerText = i + 1;
+                szamozas.style.textAlign = "center";
+
+                let tartalom = document.createElement("td");
+                tartalom.innerText = content[i];
+
+                ujSor.appendChild(szamozas);
+                ujSor.appendChild(tartalom);
+
+                if (i % 2 == 0) {
+                    ujSor.style.backgroundColor = "gray";
+                    ujSor.style.color = "lightgray";
+                } else {
+                    ujSor.style.backgroundColor = "lightgray";
+                }
+
+                tablaTest.appendChild(ujSor);
+            }
+        });
+
+        fetch('Atlagszamlalo.java').then(r => r.text()).then(t => {
+            let content = t.split("\n");
+
+            let tablaTest = document.getElementById('tablatestjava');
+            let sorszam = 1;
+            for (let i = 0; i < content.length; i++) {
+                let ujSor = document.createElement("tr");
+                
+                let szamozas = document.createElement("td");
+                szamozas.innerText = sorszam;
+                szamozas.style.textAlign = "center";
+
+                let tartalom = document.createElement("td");
+                tartalom.innerText = content[i];
+
+                ujSor.appendChild(szamozas);
+                ujSor.appendChild(tartalom);
+
+                if (i % 2 == 0) {
+                    ujSor.style.backgroundColor = "gray";
+                    ujSor.style.color = "lightgray";
+                } else {
+                    ujSor.style.backgroundColor = "lightgray";
+                }
+
+                tablaTest.appendChild(ujSor);
+
+                sorszam++;
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,50 @@
+span {
+    padding-right: 48px;
+    padding-left: 48px;
+    padding-top: 8px;
+}
+
+img {
+    padding-right: 2px;
+    padding-left: 2px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    cursor: pointer;
+}
+
+input, button {
+    font-size: 35px;
+    padding: 5px;
+}
+
+body, select {
+    font-size: 35px;
+}
+
+img.kivalasztott {
+    border: 0.3em solid blue;
+}
+
+#version {
+    font-size: 15px;
+    padding-left: 1px;
+}
+
+#pluszdiv {
+    float: left;
+    clear: left;
+}
+
+#minuszdiv {
+    float: right;
+    clear: right;
+}
+
+#kontener {
+    width: 90%;
+}
+
+.szurke {
+    background-color: gray;
+    border: 1px solid black;
+}

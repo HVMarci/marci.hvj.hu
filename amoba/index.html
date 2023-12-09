@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <title>Amőba</title>
+    <style>canvas { border: 1px #d3d3d3 solid }</style>
+</head>
+<body onload="init()">
+    <canvas id="canvas" width="480" height="480" onclick="kattintas(event)"></canvas>
+    <br>
+    <button onclick="tabla_torles()">Újrakezdés</button>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg" alt="flamingó">
+    <script>
+        var elso_lepes;
+        var lepeskoz;
+        var hatar;
+        var tabla = [0,0,0,0,0,0,0,0,0,0];
+        var pontok_x = 0;
+        var pontok_y = 0;
+        var gyozelem = 0;
+        var canvas;
+        var ctx;
+        var w,h;
+        var cel = 5;
+
+        function init() {
+            canvas = document.getElementById("canvas");
+            ctx = canvas.getContext("2d");
+            w = canvas.width;
+            h = canvas.height;
+            lepeskoz = (w-10)/10;
+            hatar = (11*lepeskoz) + 5;
+            tabla_torles();
+        }
+
+        function tabla_torles() {
+            elso_lepes = 0;
+            for (i = 0; i < 10; i++) {
+                tabla[i] = [0,0,0,0,0,0,0,0,0,0];
+            }
+            hatter_kirajzol();
+        }
+
+        function hatter_kirajzol() {
+            ctx.lineWidth = 3;
+            ctx.fillStyle = "#cccccc";
+            ctx.strokeStyle = "#000000";
+            ctx.beginPath();
+            ctx.fillRect(0,0,w,h);
+            ctx.fill();
+            ctx.stroke();
+
+            for (i = 5; i < hatar; i+=lepeskoz) {
+                ctx.moveTo(i,5);
+                ctx.lineTo(i,hatar-lepeskoz);
+                ctx.stroke();
+            }
+
+            for (i = 5; i < hatar; i+=lepeskoz) {
+                ctx.moveTo(5,i);
+                ctx.lineTo(hatar-lepeskoz,i);
+                ctx.stroke();
+            }
+        }
+
+        function kattintas(e) {
+            var x_adat = Math.floor(((e.clientX-10)/(lepeskoz)));
+            var y_adat = Math.floor(((e.clientY-10)/(lepeskoz)));
+
+            if (x_adat < 10 && y_adat < 10) {
+                if (tabla[y_adat][x_adat > 0]) return;
+                else {
+                    bejeloles(x_adat, y_adat, 1);
+                    if (kereses_gyozelem(1,cel) == 1) {
+                        alert("Ön nyert!");
+                        //tabla_torles();
+                    } else {
+                        MI_kovetkezo_lepes();
+                    }
+                    
+                }
+            }
+
+        }
+
+        function bejeloles(x,y,id) {
+            tabla[y][x]=id;
+            tabla_kirajzol();
+        }
+
+        function tabla_kirajzol() {
+            for (y=0;y<10;y++) {
+                for(x=0;x<10;x++) {
+                    if (tabla[y][x] > 0) {
+                        if (tabla[y][x] == 1) ctx.fillStyle="#22cccc";
+                        else if (tabla[y][x] == 2) ctx.fillStyle="#cc2222";
+                        ctx.beginPath();
+                        ctx.arc(x*lepeskoz+5+(lepeskoz/2),y*lepeskoz+5+(lepeskoz/2),(lepeskoz/2)-5,0,2*Math.PI);
+                        ctx.stroke();
+                        ctx.fill();
+                    }
+                }
+            }
+        }
+
+        function kereses_gyozelem(id,max_num) {
+            if (keres_horiz(id,max_num) == 1) return 1;
+            if (keres_fugg(id,max_num) == 1) return 1;
+            if (keres_fuggatlo_lefele(id, max_num) == 1) return 1;
+            if (keres_fuggatlo_felfele(id, max_num) == 1) return 1;
+            return -1;
+        }
+
+        function keres_horiz(id, max_num) {
+            var szamlalo;
+            for (y=0;y<10;y++) {
+                for (x=0;x<10;x++) {
+                    if (tabla[y][x] == id) {
+                        pontok_x=x;
+                        pontok_y=y;
+                        szamlalo = 0;
+                        for(x2=x;x2<10;x2++) {
+                            if (tabla[y][x2] == id) szamlalo++;
+                            else break;
+                            if (szamlalo == max_num) return 1;
+                        }
+                    }
+                }
+            }
+            return -1;
+        }
+
+        function keres_fugg(id, max_num) {
+            var szamlalo;
+            for (x=0;x<10;x++) {
+                for (y=0;y<10;y++) {
+                    if (tabla[y][x] == id) {
+                        pontok_x=x;
+                        pontok_y=y;
+                        szamlalo = 0;
+                        for(y2=y;y2<10;y2++) {
+                            if (tabla[y2][x] == id) szamlalo++;
+                            else break;
+                            if (szamlalo == max_num) return 1;
+                        }
+                    }
+                }
+            }
+            return -1;
+        }
+
+        function keres_fuggatlo_lefele(id, max_num) {
+            var szamlalo;
+            for (x=0;x<10;x++) {
+                for (y=0;y<10;y++) {
+                    if (tabla[y][x] == id) {
+                        pontok_x=x;
+                        pontok_y=y;
+                        x2=x;
+                        szamlalo=0;
+                        for (y2=y;y2<10;y2++,x2++) {
+                            if (tabla[y2][x2] == id) szamlalo++;
+                            else break;
+                            if (szamlalo == max_num) return 1;
+                        }
+                    }
+                }
+            }
+
+            return -1;
+        }
+
+        function keres_fuggatlo_felfele(id, max_num) {
+            var szamlalo;
+            for (x=0;x<10;x++) {
+                for (y=0;y<10;y++) {
+                    if (tabla[y][x] == id) {
+                        pontok_x=x;
+                        pontok_y=y;
+                        x2=x;
+                        szamlalo=0;
+                        for (y2=y;y2>=0;y2--,x2++) {
+                            if (tabla[y2][x2] == id) szamlalo++;
+                            else break;
+                            if (szamlalo == max_num) return 1;
+                        }
+                    }
+                }
+            }
+
+            return -1;
+        }
+
+        function MI_kovetkezo_lepes() {
+            if (elso_lepes == 0) {
+                elso_lepes = 1;
+                if (get_random_free_cells() == 1) bejeloles(pontok_x,pontok_y,2);
+            } else {
+                if (MI_tamad() == -1) MI_blokkol();
+            }
+
+            if (kereses_gyozelem(2,cel) == 1) {
+                alert("A CPU nyert!");
+                //tabla_torles();
+            }
+        }
+
+        function MI_blokkol() {
+            var eredmeny = 1; // -1 lépés történt, 1 nem történt lépés, lehet támadni
+
+            for (i = 4; i > 0; i--) {
+                var a = kiegeszit_felkesz(1,i,1);
+                if (a == -1) {
+                    var b = kiegeszit_felkesz(1,i,2);
+                    if (b == -1) {
+                        var c = kiegeszit_felkesz(1,i,3)
+                        if (c == -1) {
+                            var d = kiegeszit_felkesz(1,i,4)
+                            if (d != -1) {
+                                eredmeny = -1;
+                                break;
+                            }
+                        } else {
+                            eredmeny = -1;
+                            break;
+                        }
+                    } else {
+                        eredmeny = -1;
+                        break;
+                    }
+                } else {
+                    eredmeny = -1;
+                    break;
+                }
+            }
+
+            return eredmeny;
+        }
+
+        function MI_tamad() {
+            var eredmeny; // -1 lépés történt, 1 nem történt lépés, lehet blokkolni
+
+            eredmeny = gyors_ellenorzes(2,3); // alap:4, 3 erősebb
+            return eredmeny;
+        }
+
+        function gyors_ellenorzes(id, max_num) {
+            // -1 nincsen szabad, 1 van szabad
+            if (kiegeszit_felkesz(id, max_num,1 ) == -1) {
+                if (kiegeszit_felkesz(id, max_num, 2) == -1) {
+                    if (kiegeszit_felkesz(id, max_num, 3) == -1){
+                        if (kiegeszit_felkesz(id, max_num, 4) == -1) return -1;
+                        else return 1;
+                    } else return 1;
+                } else return 1;
+            } else return 1;
+        }
+
+        function get_random_free_cells() {
+            var j = 0; // jelzi, ha nincs üres cella
+            var x = 0;
+            var y = 0;
+            for (y = 0; y < 10; y++) {
+                for (x = 0; x < 10; x++) {
+                    if (tabla[y][x] == 0) {
+                        pontok_x=x;
+                        pontok_y = y;
+                        j = 1;
+                    }
+                }
+            }
+
+            if (j = 0) return -1;
+
+            x = Math.floor(Math.random()*10);
+            y = Math.floor(Math.random()*10);
+            pontok_x = x;
+            pontok_y = y;
+
+            while (tabla[x][y] != 0) {
+                x = Math.floor(Math.random()*10);
+                y = Math.floor(Math.random()*10);
+                pontok_x = x;
+                pontok_y = y;
+            }
+            return 1;
+        }
+
+        function kiegeszit_felkesz(id, max_num, tipus) {
+            var eredmeny;
+            switch (tipus) {
+                case 1:
+                    eredmeny = keres_szabad_horiz(id, max_num);
+                    if (eredmeny == 1) {bejeloles(pontok_x-1, pontok_y,2); return eredmeny;}
+                    else if (eredmeny == 2) {bejeloles(pontok_x+max_num, pontok_y, 2); return eredmeny;}
+                    break;
+                case 2:
+                    eredmeny=keres_szabad_fugg(id, max_num);
+                    if (eredmeny == 1) {
+                        bejeloles(pontok_x, pontok_y-1, 2);
+                        return eredmeny;
+                    } else if (eredmeny == 2) {
+                        bejeloles(pontok_x, pontok_y+1, 2);
+                        return eredmeny;
+                    }
+                    break;
+                case 3:
+                    eredmeny = keres_szabad_fuggatlo_lefele(id, max_num);
+                    if (eredmeny == 1) {bejeloles(pontok_x-1, pontok_y-1,2);return eredmeny;}
+                    else if (eredmeny == 2) {bejeloles(pontok_x+max_num, pontok_y+max_num, 2);return eredmeny;}
+                    break;
+
+                case 4:
+                    eredmeny=keres_szabad_fuggatlo_felfele(id, max_num);
+                    if (eredmeny == 1) {bejeloles(pontok_x+max_num, pontok_y-max_num, 2); return eredmeny;}
+                    else if (eredmeny == 2) {bejeloles(pontok_x-1, pontok_y+1,2);return eredmeny;}
+                    break;
+
+                default:
+                    return -1;
+                    break;
+            }
+
+            return -1;
+        }
+
+        function keres_szabad_horiz(id, max_num) {
+            var szamlalo;
+
+            for (y = 0; y < 10; y++) {
+                for (x = 0; x < 10;x++) {
+                    if (tabla[y][x] == id) {
+                        szamlalo = 0;
+                        for (x2 = x; x2<10; x2++) {
+                            if (szamlalo == max_num) break;
+                            // felesleges körök kiiktatása
+                            if (tabla[y][x2] == id) szamlalo++;
+                            else break;
+                            if (szamlalo == max_num) {
+                                if (x > 0) {
+                                    if (tabla[y][x-1] == 0) {
+                                        pontok_x = x;
+                                        pontok_y = y;
+                                        return 1;
+                                    }
+                                }
+                                if (x < (10-max_num)) {
+                                    if (tabla[y][x+max_num] == 0) {
+                                        pontok_x = x;
+                                        pontok_y = y;
+                                        return 2;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return -1;
+        }
+
+        function keres_szabad_fugg(id, max_num) {
+            var szamlalo;
+
+            for (x = 0; x < 10; x++) {
+                for (y = 0; y < 10;y++) {
+                    if (tabla[y][x] == id) {
+                        szamlalo = 0;
+                        for (y2 = y; y2<10; y2++) {
+                            if (szamlalo == max_num) break;
+                            // felesleges körök kiiktatása
+                            if (tabla[y2][x] == id) szamlalo++;
+                            else break;
+                            if (szamlalo == max_num) {
+                                if (y > 0) {
+                                    if (tabla[y-1][x] == 0) {
+                                        pontok_x = x;
+                                        pontok_y = y;
+                                        return 1;
+                                    }
+                                }
+                                if (y < (10-max_num)) {
+                                    if (tabla[y+max_num][x] == 0) {
+                                        pontok_x = x;
+                                        pontok_y = y;
+                                        return 2;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return -1;
+        }
+
+        function keres_szabad_fuggatlo_lefele(id, max_num) {
+            var szamlalo;
+            var x2;
+            var x, y, y2;
+
+            for (x = 0; x < 10; x++) {
+                for (y = 0; y < 10;y++) {
+                    if (tabla[y][x] == id) {
+                        x2 = x;
+                        szamlalo = 0;
+                        for (y2 = y; y2<10; y2++) {
+                            if (szamlalo == max_num) break;
+                            // felesleges körök kiiktatása
+                            if (tabla[y2][x2] == id) szamlalo++;
+                            else break;
+                            if (szamlalo == max_num) {
+                                if (x > 0 && y > 0) {
+                                    if (tabla[y-1][x-1] == 0) {
+                                        pontok_x = x;
+                                        pontok_y = y;
+                                        return 1;
+                                    }
+                                }
+                                if (x < (10-max_num) && y < (10-max_num)) {
+                                    if (tabla[y+max_num][x+max_num] == 0) {
+                                        pontok_x = x;
+                                        pontok_y = y;
+                                        return 2;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return -1;
+        }
+
+        function keres_szabad_fuggatlo_lefele(id, max_num) {
+            var szamlalo;
+            var x2;
+            var x, y, y2;
+
+            for (x = 0; x < 10; x++) {
+                for (y = 0; y < 10;y++) {
+                    if (tabla[y][x] == id) {
+                        x2 = x;
+                        szamlalo = 0;
+                        for (y2 = y; y2<10; y2++) {
+                            if (szamlalo == max_num) break;
+                            // felesleges körök kiiktatása
+                            if (tabla[y2][x2] == id) szamlalo++;
+                            else break;
+                            if (szamlalo == max_num) {
+                                if (x > 0 && y > 0) {
+                                    if (tabla[y-1][x-1] == 0) {
+                                        pontok_x = x;
+                                        pontok_y = y;
+                                        return 1;
+                                    }
+                                }
+                                if (x < (10-max_num) && y < (10-max_num)) {
+                                    if (tabla[y+max_num][x+max_num] == 0) {
+                                        pontok_x = x;
+                                        pontok_y = y;
+                                        return 2;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return -1;
+        }
+
+        function keres_szabad_fuggatlo_felfele(id, max_num) {
+            var szamlalo;
+            var x2;
+            var x, y, y2;
+
+            for (x = 0; x < 10; x++) {
+                for (y = 0; y < 10;y++) {
+                    if (tabla[y][x] == id) {
+                        x2 = x;
+                        szamlalo = 0;
+                        for (y2 = y; y2>=0; y2--, x2++) {
+                            if (szamlalo == max_num) break;
+                            // felesleges körök kiiktatása
+                            if (tabla[y2][x2] == id) szamlalo++;
+                            else break;
+                            if (szamlalo == max_num) {
+                                if (x < (10-max_num) && y > (max_num-1)) {
+                                    if (tabla[y-max_num][x+max_num] == 0) {
+                                        pontok_x = x;
+                                        pontok_y = y;
+                                        return 1;
+                                    }
+                                }
+                                if (x > 0 && y < 9) {
+                                    if (tabla[y+1][x-1] == 0) {
+                                        pontok_x = x;
+                                        pontok_y = y;
+                                        return 2;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return -1;
+        }
+    </script>
+</body>
+</html>

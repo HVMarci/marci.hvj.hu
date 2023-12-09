@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Legkreatívabb cím</title>
+    <meta charset="utf-8">
+    <script src="app.js"></script>
+    <style>
+        table, tr, td {
+            border-collapse: collapse;
+            border: 1px black solid;
+        }
+    </style>
+</head>
+<body onload="oldalbetoltes();">
+    <form id="uziform" onsubmit="uzenet_submit();">
+        <label for="nev">Név: </label>
+        <input id="nev" name="nev" type="text">
+        <br>
+        <textarea name="uzi" id="uzi"></textarea>
+        <label>Válasz neki: </label>
+        <input type="number" name="valasz">
+        <br>
+        <button type="submit">Beküldés</button>
+    
+    <br>
+    <button onclick="oldalbetoltes();">Betöltés</button>
+    <br>
+    <table id="ide"></table>
+</form>
+</body>
+</html>

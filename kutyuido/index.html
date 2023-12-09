@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="hu">
+<head>
+    <title>Kütyüidő számláló</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="kutyuido.css">
+    <link rel="shortcut icon" href="kutyuido.ico"/>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript" src="app.js"></script>
+    <script type="text/javascript" src="/canvasjs-2.3.2/canvasjs.min.js"></script>
+    <noscript>Nem működik nálad a JavaScript! :(</noscript>
+</head>
+<body onload="oldalbetoltes()">
+    <span id="version">Kütyüidő v1.3.0</span><br>
+    <span><img id="marci" src="marci.jpg" alt="Marci" onclick="gyermekvalasztas('marci')" /></span>
+    <span><img id="dani" src="dani.jpg" alt="Dani" onclick="gyermekvalasztas('dani')" /></span>
+    <span><img id="zsofi" src="zsofi.jpg" alt="Zsófi"  onclick="gyermekvalasztas('zsofi')" /></span>
+    <span><img id="bogi" src="bogi.jpg" alt="Bogi"  onclick="gyermekvalasztas('bogi')" /></span><br>
+    <form id="esemenyForm" onsubmit="esemenylista_submit()">
+        <fieldset id="kontener">
+        <input type="hidden" id="gyermek" name="gyermek" value="" />
+        <p>Titkos PIN-kód:</p>
+        <input id="kod" name="kod" type="number" max="9999">
+        <p>Válaszd ki a cselekvést!</p>
+        <input name="cselekves" type="text">
+        <!--select id="cselekves_id" name="cselekves_id">
+        </select-->
+        <p>Írd ide a dátumot:</p>
+        <input name="datum" type="date" min="2019-01-01" max="2050-01-01"/><br><br>
+        <p>Hány percet kap ezért?</p>
+        <div id="pluszminusz">
+            <!--div id="pluszdiv"-->
+                <label for="plusz">Plusz: </label>
+                <input type="number" max="240" min="0" id="plusz" name="plusz" style="width: 200px;" onchange="minuszLetiltas()">
+            <!--/div-->
+            <!--div id="minuszdiv"-->
+                <label for="minusz">Mínusz: </label>
+                <input type="number" max="240" min="0" id="minusz" name="minusz" style="width: 200px;" onchange="pluszLetiltas()">
+            <!--/div-->
+        </div>
+        <!--select name=ido id=ido>
+            <option value=-10>-10</option>
+            <option value=-5>-5</option>
+            <option value=-15>-15</option>
+            <option value=-20>-20</option>
+            <option value=-30>-30</option>
+            <option value=-60>-60</option>
+            <option value=5>5</option>
+            <option value=10>10</option>
+            <option value=15>15</option>
+            <option value=20>20</option>
+            <option value=30>30</option>
+            <option value=45>45</option>
+            <option value=60>60</option>
+            <option value=90>90</option>
+            <option value=120>120</option>
+            <option value=3>3</option>
+        </select>-->
+        <br><br>
+        <input type="submit" value="Mentés" />
+        <input type="reset" value="Alaphelyzetbe állítás" onclick="felszabaditas()"/>
+        </fieldset>
+    </form>
+    <hr>
+    <div id="esemenylista">
+    </div>
+    <div id="diagramText">
+    </div>
+    <button onclick="diagramLetrehozas();">Diagram 1</button>
+    <button onclick="diagram2Letrehozas();">Diagram 2</button>
+    <div id="diagram">
+    </div>
+    <div id="diagram2">
+    </div>
+    <hr>
+</body>
+</html>

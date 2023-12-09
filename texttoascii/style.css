@@ -1,0 +1,9 @@
+#eredmeny {
+    border: 1px solid black;
+    font-family: Consolas,monaco,monospace;
+}
+
+#eredmeny, #txt {
+    width: 30%;
+    height: 30%;
+}

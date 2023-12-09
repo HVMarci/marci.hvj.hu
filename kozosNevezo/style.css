@@ -1,0 +1,12 @@
+input {
+    width: 30px;
+}
+
+hr {
+    display: inline-block;
+    width: 32px;
+}
+
+span {
+    font-size: 10px;
+}

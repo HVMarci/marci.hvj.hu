@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Népmesés társas</title>
+    <link rel="icon" href="favicon.ico">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <p id="chat"><b>Chat:</b></p>
+    <textarea id="txt"></textarea>
+    <br>
+    <button onclick="uzikuldes();">Üzenet küldése</button>
+    <br>
+    <canvas id="nepmeseCanvas" width="960" height="720">Nem támogatja a böngésződ a canvast!</canvas>
+    <button id="dobasButton" onclick="dobas();">Dobás</button>
+    <button id="startButton" onclick="start();">Start</button>
+    <br>
+    <canvas id="karakterlapCanvas" width="700", height="500">Nem támogatja a böngésződ a canvast!</canvas>
+    <!--button onclick="kovi();">Következő</button-->
+    <br>
+    <!--canvas id="canvas" style="border: 1px solid black;" width="400" height="400" hidden>Nem támogatja a böngésződ a canvast!</canvas>
+    <br><br-->
+    <!--canvas id="gameCanvas" style="border: 1px solid green;" width="400" height="400">Nem támogatja a böngésződ a canvast!</canvas-->
+    <!--img hidden src="2019-07-27_16.08.30.png" alt="kep" id="kep"-->
+    <!-- Játéktábla -->
+    <img hidden src="resources/images/tabla960.png" id="tabla">
+    <img hidden src="resources/images/tesztszereplo.png" id="szereplo">
+    <!-- Karakterlapok -->
+    <img hidden src="resources/images/karakterlapok/azOkosLany.jpg" id="azOkosLany" class="karakterlap">
+    <img hidden src="resources/images/karakterlapok/csillagszemuJuhasz.jpg" id="csillagszemuJuhasz" class="karakterlap">
+    <img hidden src="resources/images/karakterlapok/fabolFaragottPeter.jpg" id="fabolFaragottPeter" class="karakterlap">
+    <img hidden src="resources/images/karakterlapok/feherlofia.jpg" id="feherlofia" class="karakterlap">
+    <img hidden src="resources/images/karakterlapok/legkisebbKiralylany.jpg" id="legkisebbKiralylany" class="karakterlap">
+    <img hidden src="resources/images/karakterlapok/tunderszepIlona.jpg" id="tunderszepIlona" class="karakterlap">
+    <!-- Karakterkorongok -->
+    <img hidden src="resources/images/karakterkorongok/azOkosLany.png" id="azOkosLanyK" class="karakterkorong">
+    <img hidden src="resources/images/karakterkorongok/csillagszemuJuhasz.png" id="csillagszemuJuhaszK" class="karakterkorong">
+    <img hidden src="resources/images/karakterkorongok/fabolFaragottPeter.png" id="fabolFaragottPeterK" class="karakterkorong">
+    <img hidden src="resources/images/karakterkorongok/feherlofia.png" id="feherlofiaK" class="karakterkorong">
+    <img hidden src="resources/images/karakterkorongok/legkisebbKiralylany.png" id="legkisebbKiralylanyK" class="karakterkorong">
+    <img hidden src="resources/images/karakterkorongok/tunderszepIlona.png" id="tunderszepIlonaK" class="karakterkorong">
+    <!-- Korongok -->
+    <img hidden src="resources/images/korongok/pogacsa_eleje.png" id="pogacsa" class="korong">
+    <img hidden src="resources/images/korongok/arany_cimer.png" id="arany" class="korong">
+    <img hidden src="resources/images/korongok/jotanacs.png" id="jotanacs" class="korong">
+    <img hidden src="resources/images/korongok/so.png" id="so" class="korong">
+    <img hidden src="resources/images/korongok/lepesmodosito-1.png" id="lepesmodosito-1" class="korong">
+    <img hidden src="resources/images/korongok/lepesmodosito-2.png" id="lepesmodosito-2" class="korong">
+    <!-- Kezdőtárgyak -->
+    <img hidden src="resources/images/targyak/kezdotargyak/bot.png" id="bot" class="kezdotargy">
+    <img hidden src="resources/images/targyak/kezdotargyak/csizma.png" id="csizma" class="kezdotargy">
+    <img hidden src="resources/images/targyak/kezdotargyak/furulya.png" id="furulya" class="kezdotargy">
+    <img hidden src="resources/images/targyak/kezdotargyak/kard.png" id="kard" class="kezdotargy">
+    <img hidden src="resources/images/targyak/kezdotargyak/tarisznya.png" id="tarisznya" class="kezdotargy">
+    <img hidden src="resources/images/targyak/kezdotargyak/toll.png" id="toll" class="kezdotargy">
+    <!-- Eszközök -->
+    <img hidden src="resources/images/targyak/eszkozok/csakany.png" id="csakany" class="eszkoz">
+    <img hidden src="resources/images/targyak/eszkozok/kotel.png" id="kotel" class="eszkoz">
+    <img hidden src="resources/images/targyak/eszkozok/kulcs.png" id="kulcs" class="eszkoz">
+    <!-- Állatok -->
+    <img hidden src="resources/images/targyak/allatok/galamb.png" id="galamb" class="allat">
+    <img hidden src="resources/images/targyak/allatok/hal.png" id="hal" class="allat">
+    <img hidden src="resources/images/targyak/allatok/kutya.png" id="kutya" class="allat">
+    <img hidden src="resources/images/targyak/allatok/lo.png" id="lo" class="allat">
+    <img hidden src="resources/images/targyak/allatok/macska.png" id="macska" class="allat">
+    <!-- Varázstárgyak -->
+    <img hidden src="resources/images/targyak/varazstargyak/fesu.png" id="fesu" class="varazstargy">
+    <img hidden src="resources/images/targyak/varazstargyak/koponyeg.png" id="kopeny" class="varazstargy">
+    <img hidden src="resources/images/targyak/varazstargyak/terulj_asztal.png" id="teruljasztal" class="varazstargy">
+    <img hidden src="resources/images/targyak/varazstargyak/varazscsizma.png" id="varazscsizma" class="varazstargy">
+    <img hidden src="resources/images/targyak/varazstargyak/varazskard.png" id="varazskard" class="varazstargy">
+    <img hidden src="resources/images/targyak/varazstargyak/varazspalca.png" id="varazspalca" class="varazstargy">
+    <!-- Javascript -->
+    <script type="text/javascript" src="ws.js"></script>
+    <script type="text/javascript" src="nepmeses.js"></script>
+</body>
+
+</html>

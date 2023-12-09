@@ -1,0 +1,31 @@
+input, button, label {
+    font-size: 150%;
+}
+
+input.tabla {
+    width: 40px;
+    height: 40px;
+    font-size: 37px;
+    text-align: center;
+    border: 0.1px solid white;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+td {
+    border: 1px solid black;
+}
+
+input {
+    cursor: text;
+}
+
+button {
+    cursor: pointer;
+}
+
+input#soroszlop:focus {
+    outline: 2px blue outset;
+}

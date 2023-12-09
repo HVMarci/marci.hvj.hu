@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+	"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<svg
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   version="1.0"
+   width="504.75659"
+   height="300"
+   id="svg2511">
+  <defs
+     id="defs2513" />
+  <g
+     transform="translate(-320.15882,-254.50504)"
+     id="layer1">
+    <path
+       d="M 320.15882,254.50504 L 320.15882,378.31474 L 586.82342,378.31474 L 824.91542,254.50504 L 686.81912,254.50504 L 577.29512,311.64814 L 382.05512,311.64814 L 382.05512,254.50504 L 320.15882,254.50504 z M 320.15882,430.69534 L 320.15882,554.50504 L 382.05512,554.50504 L 382.05512,497.36194 L 577.29512,497.36194 L 686.81912,554.50504 L 824.91542,554.50504 L 586.82342,430.69534 L 320.15882,430.69534 z "
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:6;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:3.59999982;stroke-opacity:1"
+       id="path2521" />
+  </g>
+</svg>

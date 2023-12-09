@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Prímtényezős felbotás</title>
+    <meta charset="utf-8">
+    <script type="text/javascript">
+        function kiiras() {
+            var alapSzam = prompt("Szám:");
+            alapSzam.replaceAll(" ", "");
+            if (alapSzam.indexOf(",") != null) {
+                alert("Törtszámokkal nem dolgozok!");
+                return;
+            }
+            if (alapSzam === "") {
+                alert("Ez semmi!");
+                return fse;
+            }
+            if (isNaN(parseInt(alapSzam))) {
+                alert("Ez nem egy szám!");
+                return;
+            }
+            szamSzam = parseInt(alapSzam);
+            if (szamSzam != parseFloat(alapSzam)) {
+                alert("Törtszámokkal nem dolgozok!");
+                return;
+            }
+            var kiirandoText = szamSzam + " prímtényezős felbontása: ";
+            document.getElementById("kiiro").innerHTML = kiirandoText;
+        }
+    </script>
+</head>
+<body>
+    <button type="button" onclick="kiiras()">Szám beírása</button>
+    <div id="kiiro"></div>
+</body>
+</html>

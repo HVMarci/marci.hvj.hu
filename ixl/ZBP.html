@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Két pont közötti távolság</title>
+    <style>
+        #container {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 12pt;
+        }
+
+        .szam {
+            width: 10%;
+        }
+    </style>
+    <script src="/js/coordhelper.js"></script>
+    <script src="/js/numberhelper.js"></script>
+</head>
+
+<body>
+    <div id="container">
+        <table>
+            <tbody>
+                <tr>
+                    <td>
+                        Első koordináta:
+                    </td>
+                    <td>
+                        (
+                        <input id="x1" class="szam" type="text">
+                        ;&nbsp;
+                        <input id="y1" class="szam" type="text">
+                        )
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Második koordináta:
+                    </td>
+                    <td>
+                        (
+                        <input id="x2" class="szam" type="text">
+                        ;&nbsp;
+                        <input id="y2" class="szam" type="text">
+                        )
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <label for="torolni">Törölve legyenek-e a koordináta mezők számolás után: </label>
+    <input type="checkbox" name="torolni" id="torolni" checked>
+    <br><br>
+
+    <button onclick="szamitas()">Számítás</button>
+
+    <script type="application/javascript">
+        function szamitas() {
+            let x1 = document.getElementById("x1").value;
+            let y1 = document.getElementById("y1").value;
+            let x2 = document.getElementById("x2").value;
+            let y2 = document.getElementById("y2").value;
+
+            let d = kerekites1Tizedesjegyre(Math.abs(dist(x1, y1, x2, y2)));
+            alert(d);
+
+            if (document.getElementById("torolni").checked) {
+                for (let i = 0; i < document.getElementsByClassName("szam").length; i++) {
+                    document.getElementsByClassName("szam")[i].value = "";
+                }
+            }
+        }
+
+        function enter(e) {
+            if (e.code == "Enter") {
+                szamitas();
+            }
+        }
+
+        window.addEventListener("keydown", enter);
+    </script>
+</body>
+
+</html>

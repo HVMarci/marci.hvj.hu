@@ -1,0 +1,49 @@
+~~~Alap osztály:
+
+**package <Package neve>;
+
+public class <Class neve> {
+
+	public static void main(String[] args) {
+		<Kód helye>
+	}
+
+}**
+
+~~~Sima osztály:
+
+**package <Package neve>;
+
+public class <Class neve (nagybetű)> {
+
+}**
+
+~~~Metódus:
+
+**public void <Metódus neve (kisbetű)>() {
+
+}**
+
+~~~Metódus, bemenő szöveg paraméterrel, amit kiír:
+
+**public void <Metódus neve (kisbetű)>(String <Bemenő paraméter neve>) {
+	System.out.println(<Bemenő paraméter neve>); (sysout + Ctrl+Space)
+}**
+
+~~~Tulajdonság:
+
+**public String <Tulajdonság neve (kisbetű)>;**
+
+~~~Konstruktor:
+
+**public <Class neve>(<Bemenő paraméter típusa> <Bemenő paraméter neve>) {
+	<Tulajdonság neve> = <Bemenő paraméter neve>;
+}**
+
+~~~Objektum létrehozása:
+
+**<Class neve> <Objektum neve> = new <Class neve>(<Bemenő paraméter>);**
+
+~~~Metódus meghívása:
+
+**<Objektum neve>.<Metódus neve>(<Bemenő paraméter>);**

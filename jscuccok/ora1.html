@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <title>Első óra</title>
+    <style>
+        canvas {
+            border: 1px black solid;
+        }
+    </style>
+</head>
+<body>
+    <!--
+    <h1>Egyes címsor</h1>
+    <h2>Kettes címsor</h2>
+    <h3>Hármas címsor</h3>
+    <h4>Négyes címsor</h4>
+    <h5>Ötös címsor</h5>
+    <h6>Hatos címsor</h6>
+    <p>Paragrafus.</p>
+    <p>Második paragrafus.</p>
+    <div>alma1</div>
+    <div>alma2</div>
+    -->
+    <noscript>Sajnos a böngésződ nem támogatja a javascriptet. :(</noscript>
+    <canvas width="500px" height="500px" id="canvas">Nem használhatsz canvast :(</canvas>
+    <script>
+        var canvas = document.getElementById("canvas");
+        var context = canvas.getContext("2d");
+        var x = 20;
+        var y = 20;
+        var fel = false;
+        var le = false;
+        var jobbra = false;
+        var balra = false;
+        const sebesseg = 2;
+        var meret = 10;
+        const palyaMeret = 500;
+        var sutiX;
+        var sutiY;
+        // beírni a 10-et!!!
+        var sutiMeret = 10;
+        var sutiSzam;
+
+        function init() {
+            //alert("Helló");
+            //console.log("Üzenet");
+
+            context.fillStyle = "gray";
+            negyzetRajzolas();
+            ujSuti();
+
+            setInterval(update, 20);
+            window.onkeydown = lenyomasKezelo;
+            window.onkeyup = felengedesKezelo;
+
+        }
+
+        function torles() {
+            var eredetiSzin = context.fillStyle;
+            context.fillStyle = "white";
+            context.fillRect(0,0,palyaMeret,palyaMeret);
+            context.fillStyle = eredetiSzin;
+        }
+
+        function update() {
+            feldolgozas();
+            torles();
+            sutiRajzolas();
+            negyzetRajzolas();
+        }
+
+        function lenyomasKezelo(event) {
+            var key = event.key;
+            switch (key) {
+                case "Down":
+                case "ArrowDown":
+                    le = true;
+                    break;
+
+                case "Up":
+                case "ArrowUp":
+                    fel = true;
+                    break;
+
+                case "Right":
+                case "ArrowRight":
+                    jobbra = true;
+                    break;
+
+                case "Left":
+                case "ArrowLeft":
+                    balra = true;
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        function felengedesKezelo(event) {
+            var key = event.key;
+            switch (key) {
+                case "Down":
+                case "ArrowDown":
+                    le = false;
+                    break;
+
+                case "Up":
+                case "ArrowUp":
+                    fel = false;
+                    break;
+
+                case "Right":
+                case "ArrowRight":
+                    jobbra = false;
+                    break;
+
+                case "Left":
+                case "ArrowLeft":
+                    balra = false;
+                    break;
+            
+                default:
+                    break;
+            }
+        }
+
+        function feldolgozas() {
+           
+            if (le) {
+                y += sebesseg;
+            }
+
+            if (fel) {
+                y -= sebesseg;
+            }
+
+            if (jobbra) {
+                x += sebesseg;
+            }
+
+            if (balra) {
+                x -= sebesseg;
+            }
+
+            if (y >= palyaMeret) {
+                y = palyaMeret;
+            } else if (y <= 0) {
+                y = 0;
+            }
+
+            if (x >= palyaMeret) {
+                x = palyaMeret;
+            } else if (x <= 0) {
+                x = 0;
+            }
+
+        }
+
+        function negyzetRajzolas() {
+            context.beginPath();
+            context.moveTo(x-meret, y-meret);
+            context.lineTo(x+meret, y-meret);
+            context.lineTo(x+meret, y+meret);
+            context.lineTo(x-meret, y+meret);
+            context.lineTo(x-meret, y-meret);
+            context.fill();
+            context.strokeStyle = "black";
+            context.stroke();
+        }
+
+        function sutiRajzolas() {
+            var f = context.fillStyle;
+            context.fillStyle = "black";
+            context.beginPath();
+            context.moveTo(x-meret, y-meret);
+            context.lineTo(x+meret, y-meret);
+            context.lineTo(x+meret, y+meret);
+            context.lineTo(x-meret, y+meret);
+            context.lineTo(x-meret, y-meret);
+            context.fill();
+            context.strokeStyle = "black";
+            context.stroke();
+            context.fillStyle = f;
+        }
+
+        function ujSuti() {
+            sutiX = (Math.random()*(palyaMeret-(2*sutiMeret)))+10;
+            sutiY = Math.random()*(palyaMeret-2*sutiMeret)+10;
+        }
+
+        window.onload = init();
+    </script>
+</body>
+</html>

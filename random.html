@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="hu"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random számgenerátor</title>
+    <style>
+        #rc {
+            transition-duration: 0.2;
+            border-radius: 45%;
+        }
+    </style>
+</head>
+<body>
+    <button id="b">Random szám generálása</button>
+    <video id="rc" style="display: none; transform: rotate(0deg);">
+        <source src="https://marci.hvj.hu/videos/rickroll.mp4" type="video/mp4">
+    </video>
+    <span id="rv"></span>
+    <input type=range min=25 max=400 value=100 step=1 id="range">
+    <script>
+        var rc = document.getElementById("rc");
+        var r = document.getElementById("range");
+        var rv = document.getElementById("rv");
+        var rotateCount = 0;
+        var opacity = -90;
+        rc.loop = true;
+        rc.preservesPitch = false;
+        rc.mozPreservesPitch = false;
+        rc.webkitPreservesPitch = false;
+        r.style.display = "none";
+        rc.style.display = "none";
+        b.onclick = () => {
+            alert(`
+NumberFormatException at: main.js 50, 9
+    Integer.parseInt(String, int) line: not available   
+    Integer.<init>(String) line: not available  
+    InetAddressCachePolicy.<clinit>() line: not available   
+    InetAddress$Cache.getPolicy() line: not available   
+    InetAddress$Cache.put(String, Object) line: not available   
+    InetAddress.cacheInitIfNeeded() line: not available 
+    InetAddress.cacheAddress(String, Object, boolean) line: not available   
+    InetAddress.getAddressFromNameService(String, InetAddress) line: not available  
+    InetAddress.getLocalHost() line: not available  
+    SeedGenerator$1.run() line: not available   
+    AccessController.doPrivileged(PrivilegedAction<T>) line: not available [native method]  
+    SeedGenerator.getSystemEntropy() line: not available    
+    SecureRandom$SeederHolder.<clinit>() line: not available    
+    SecureRandom.engineNextBytes(byte[]) line: not available    
+    SecureRandom.nextBytes(byte[]) line: not available  
+    SecureRandom.next(int) line: not available  
+    SecureRandom(Random).nextInt() line: not available  
+    DefaultSSLContextImpl(SSLContextImpl).engineInit(KeyManager[], TrustManager[], SecureRandom) line: not available    
+    DefaultSSLContextImpl.<init>() line: not available  
+    NativeConstructorAccessorImpl.newInstance0(Constructor, Object[]) line: not available [native method]   
+    NativeConstructorAccessorImpl.newInstance(Object[]) line: not available 
+    DelegatingConstructorAccessorImpl.newInstance(Object[]) line: not available 
+    Constructor<T>.newInstance(Object...) line: not available   
+    Class<T>.newInstance0() line: not available 
+    Class<T>.newInstance() line: not available  
+    Provider$Service.newInstance(Object) line: not available    
+    GetInstance.getInstance(Provider$Service, Class) line: not available    
+    GetInstance.getInstance(String, Class, String) line: not available  
+    SSLContext.getInstance(String) line: not available  
+    SSLContext.getDefault() line: not available 
+    SSLSocketFactory.getDefault() line: not available   
+    HttpsURLConnection.getDefaultSSLSocketFactory() line: not available 
+    HttpsURLConnectionImpl(HttpsURLConnection).<init>(URL) line: not available  
+    HttpsURLConnectionImpl.<init>(URL, Proxy, Handler) line: not available  
+    Handler.openConnection(URL, Proxy) line: not available  
+    Handler.openConnection(URL) line: not available 
+    URL.openConnection() line: not available    
+`)
+            r.style.display = "block";
+            r.value = 100;
+            rc.style.display = "block";
+            rv.innerText = r.value + '% ';
+            rc.play();
+            window.requestAnimationFrame(rotate);
+        };
+
+
+
+        function rotate() {
+            rc.playbackRate = r.value / 100;
+            rv.innerText = r.value + '% ';
+
+            rc.style.opacity = Math.abs(opacity) / 90;
+            opacity += r.value / 100;
+            if (opacity > 90) opacity = -90;
+
+            rc.style.transform = 'rotate(' + rotateCount + 'deg) ';
+            rc.style.transform += 'scale(' + (Math.sin(Math.abs(opacity) / 100 * Math.PI) * 1.2) + ')';
+            rotateCount += r.value / 100;
+            window.requestAnimationFrame(rotate);
+        }
+    </script>
+
+</body></html>

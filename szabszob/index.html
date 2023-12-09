@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kulcs megszerzése</title>
+    <meta charset="utf-8">
+</head>
+<body>
+    <input type="number" id="szam">
+    <button onclick="ellenorzes();">Kód beírva</button>
+    <script>
+        function ellenorzes() {
+            if (document.getElementById("szam").value == 1224) {
+                alert("A kulcs a tietek!");
+            } else {
+                alert("Sajnos, a kód nem jó...");
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Osztály készítés</title>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href="/enaplo/konyv.png">
+</head>
+<body>
+    <form id="nevek">
+        <label for="iskolaNev">Iskola neve: </label>
+        <select name="iskolaNev" id="iskolaNev">
+            <option selected hidden disabled>--Válasszon!--</option>
+        </select>
+        <label for="osztalynev">Osztály: </label>
+        <input type="text" name="osztalynev">
+        <br>
+        <p>Neveket írja ide:</p>
+        <div id="nevDiv">
+            <input type="text" name="1">
+        </div>
+    </form>
+    <button type="button" onclick="szovegDobozHozzaadasa()">+ Új szövegdoboz</button>
+    <br>
+    <br>
+    <button onclick="tablazatKeszites()">Kész</button>
+    &nbsp;
+    <button onclick="ujratoltes()">Újrakezdés</button>
+    <script src="app.js"></script>
+</body>
+</html>
