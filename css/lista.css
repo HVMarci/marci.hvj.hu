@@ -4,7 +4,7 @@ table.lista {
 
 table.lista td {
     /* background-color: #4CAF50; */
-    background-color: #DBF0DB;
+    background-color: #52FF52;
     border: 3px solid green;
     border-radius: 3px;
     padding: 3px 10px;
@@ -15,13 +15,13 @@ table.lista a {
 }
 
 table.lista a:link {
-    color: blue;
+    color: #0000E6;
 	background-color: transparent;
 	text-decoration: none;
 }
 
 table.lista a:visited {
-    color: blue;
+    color: #0000E6;
 	background-color: transparent;
 	text-decoration: underline;
 }
