@@ -9,7 +9,7 @@
     <canvas id="canvas" width="480" height="480" onclick="kattintas(event)"></canvas>
     <br>
     <button onclick="tabla_torles()">Újrakezdés</button>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg" alt="flamingó">
+    <!--img src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg" alt="flamingó"-->
     <script>
         var elso_lepes;
         var lepeskoz;
@@ -68,7 +68,7 @@
             var y_adat = Math.floor(((e.clientY-10)/(lepeskoz)));
 
             if (x_adat < 10 && y_adat < 10) {
-                if (tabla[y_adat][x_adat > 0]) return;
+                if (tabla[y_adat][x_adat]) return;
                 else {
                     bejeloles(x_adat, y_adat, 1);
                     if (kereses_gyozelem(1,cel) == 1) {
@@ -84,6 +84,7 @@
         }
 
         function bejeloles(x,y,id) {
+            if (tabla[y][x]) debugger;
             tabla[y][x]=id;
             tabla_kirajzol();
         }
@@ -291,29 +292,29 @@
             switch (tipus) {
                 case 1:
                     eredmeny = keres_szabad_horiz(id, max_num);
-                    if (eredmeny == 1) {bejeloles(pontok_x-1, pontok_y,2); return eredmeny;}
-                    else if (eredmeny == 2) {bejeloles(pontok_x+max_num, pontok_y, 2); return eredmeny;}
+                    if (eredmeny == 1) {bejeloles(pontok_x, pontok_y,2); return eredmeny;}
+                    else if (eredmeny == 2) {bejeloles(pontok_x, pontok_y, 2); return eredmeny;}
                     break;
                 case 2:
                     eredmeny=keres_szabad_fugg(id, max_num);
                     if (eredmeny == 1) {
-                        bejeloles(pontok_x, pontok_y-1, 2);
+                        bejeloles(pontok_x, pontok_y, 2);
                         return eredmeny;
                     } else if (eredmeny == 2) {
-                        bejeloles(pontok_x, pontok_y+1, 2);
+                        bejeloles(pontok_x, pontok_y, 2);
                         return eredmeny;
                     }
                     break;
                 case 3:
                     eredmeny = keres_szabad_fuggatlo_lefele(id, max_num);
-                    if (eredmeny == 1) {bejeloles(pontok_x-1, pontok_y-1,2);return eredmeny;}
-                    else if (eredmeny == 2) {bejeloles(pontok_x+max_num, pontok_y+max_num, 2);return eredmeny;}
+                    if (eredmeny == 1) {bejeloles(pontok_x, pontok_y,2);return eredmeny;}
+                    else if (eredmeny == 2) {bejeloles(pontok_x, pontok_y, 2);return eredmeny;}
                     break;
 
                 case 4:
                     eredmeny=keres_szabad_fuggatlo_felfele(id, max_num);
-                    if (eredmeny == 1) {bejeloles(pontok_x+max_num, pontok_y-max_num, 2); return eredmeny;}
-                    else if (eredmeny == 2) {bejeloles(pontok_x-1, pontok_y+1,2);return eredmeny;}
+                    if (eredmeny == 1) {bejeloles(pontok_x, pontok_y, 2); return eredmeny;}
+                    else if (eredmeny == 2) {bejeloles(pontok_x, pontok_y, 2);return eredmeny;}
                     break;
 
                 default:
@@ -339,14 +340,14 @@
                             if (szamlalo == max_num) {
                                 if (x > 0) {
                                     if (tabla[y][x-1] == 0) {
-                                        pontok_x = x;
+                                        pontok_x = x-1;
                                         pontok_y = y;
                                         return 1;
                                     }
                                 }
                                 if (x < (10-max_num)) {
                                     if (tabla[y][x+max_num] == 0) {
-                                        pontok_x = x;
+                                        pontok_x = x+max_num;
                                         pontok_y = y;
                                         return 2;
                                     }
@@ -376,14 +377,14 @@
                                 if (y > 0) {
                                     if (tabla[y-1][x] == 0) {
                                         pontok_x = x;
-                                        pontok_y = y;
+                                        pontok_y = y-1;
                                         return 1;
                                     }
                                 }
                                 if (y < (10-max_num)) {
                                     if (tabla[y+max_num][x] == 0) {
                                         pontok_x = x;
-                                        pontok_y = y;
+                                        pontok_y = y+max_num;
                                         return 2;
                                     }
                                 }
@@ -406,7 +407,7 @@
                     if (tabla[y][x] == id) {
                         x2 = x;
                         szamlalo = 0;
-                        for (y2 = y; y2<10; y2++) {
+                        for (y2 = y; y2<10; y2++, x2++) {
                             if (szamlalo == max_num) break;
                             // felesleges körök kiiktatása
                             if (tabla[y2][x2] == id) szamlalo++;
@@ -414,54 +415,15 @@
                             if (szamlalo == max_num) {
                                 if (x > 0 && y > 0) {
                                     if (tabla[y-1][x-1] == 0) {
-                                        pontok_x = x;
-                                        pontok_y = y;
+                                        pontok_x = x-1;
+                                        pontok_y = y-1;
                                         return 1;
                                     }
                                 }
                                 if (x < (10-max_num) && y < (10-max_num)) {
                                     if (tabla[y+max_num][x+max_num] == 0) {
-                                        pontok_x = x;
-                                        pontok_y = y;
-                                        return 2;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-            return -1;
-        }
-
-        function keres_szabad_fuggatlo_lefele(id, max_num) {
-            var szamlalo;
-            var x2;
-            var x, y, y2;
-
-            for (x = 0; x < 10; x++) {
-                for (y = 0; y < 10;y++) {
-                    if (tabla[y][x] == id) {
-                        x2 = x;
-                        szamlalo = 0;
-                        for (y2 = y; y2<10; y2++) {
-                            if (szamlalo == max_num) break;
-                            // felesleges körök kiiktatása
-                            if (tabla[y2][x2] == id) szamlalo++;
-                            else break;
-                            if (szamlalo == max_num) {
-                                if (x > 0 && y > 0) {
-                                    if (tabla[y-1][x-1] == 0) {
-                                        pontok_x = x;
-                                        pontok_y = y;
-                                        return 1;
-                                    }
-                                }
-                                if (x < (10-max_num) && y < (10-max_num)) {
-                                    if (tabla[y+max_num][x+max_num] == 0) {
-                                        pontok_x = x;
-                                        pontok_y = y;
+                                        pontok_x = x+max_num;
+                                        pontok_y = y+max_num;
                                         return 2;
                                     }
                                 }
@@ -492,15 +454,15 @@
                             if (szamlalo == max_num) {
                                 if (x < (10-max_num) && y > (max_num-1)) {
                                     if (tabla[y-max_num][x+max_num] == 0) {
-                                        pontok_x = x;
-                                        pontok_y = y;
+                                        pontok_x = x+max_num;
+                                        pontok_y = y-max_num;
                                         return 1;
                                     }
                                 }
                                 if (x > 0 && y < 9) {
                                     if (tabla[y+1][x-1] == 0) {
-                                        pontok_x = x;
-                                        pontok_y = y;
+                                        pontok_x = x-1;
+                                        pontok_y = y+1;
                                         return 2;
                                     }
                                 }
