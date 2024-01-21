@@ -1,0 +1,6 @@
+1176 882 -> 42 tile
+1 tile jobbra fel: x+28 y-21  x--
+       jobbra le:  x+28 y+21  x++
+       balra fel:  x-28 y-21  y--
+       balra le:   x-28 y+21  y++
+0,0: 1895 253
