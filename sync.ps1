@@ -27,7 +27,7 @@ try {
 
     # File mask to exclude .ps1 files
     $transferOptions = New-Object WinSCP.TransferOptions
-    $transferOptions.FileMask = "| *.ps1; .git/; .gitignore; session.log; .vscode/;"
+    $transferOptions.FileMask = "| *.ps1; .git/; .gitignore; session.log; .vscode/; .htaccess;"
 
     # Perform the synchronization
     $synchronizationResult = $session.SynchronizeDirectories($synchronizationMode, $localDirectory, $remoteDirectory, $False, $False, [WinSCP.SynchronizationCriteria]::Time, $transferOptions)

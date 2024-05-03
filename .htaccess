@@ -1,5 +1,2 @@
 ErrorDocument 404 /error_pages/404.html
 ErrorDocument 403 /error_pages/403.html
-RewriteEngine On
-RewriteCond %{SERVER_PORT} 80
-RewriteRule ^(.*)$ https://marci.hvj.hu/$1 [R,L]
